@@ -32,9 +32,7 @@ test-pipeline-infrastructure:
 	/bin/bash ./scripts/build-test-properties.sh
 	/bin/bash ./aws-codebuild-docker-images/local_builds/codebuild_build.sh \
 		-i xilution/codebuild/standard-2.0 \
-		-a ./output/infrastructure \
-		-b /codebuild/output/srcDownload/secSrc/build_specs/infrastructure.yaml \
+		-a ./output \
 		-c \
 		-e properties.txt \
-		-s . \
-		-s build_specs:./build-specs
+		-s .
