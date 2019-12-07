@@ -7,3 +7,9 @@ resource "aws_vpc" "xilution_vpc" {
     xilution_organization_id = var.organization_id
   }
 }
+
+# TODO - add more network resources
+
+# TODO - add K8s
+
+# TODO - add NFS

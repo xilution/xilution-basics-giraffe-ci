@@ -7,9 +7,9 @@ phases:
     commands:
       - |
         terraform init \
-          -backend-config="role_arn=arn:aws:iam::$CLIENT_AWS_ACCOUNT_ID:role/xilution-developer-role" \
+          -backend-config="role_arn=arn:aws:iam::$CLIENT_AWS_ACCOUNT:role/xilution-developer-role" \
           -backend-config="key=terraform.tfstate" \
-          -backend-config="bucket=xilution-terraform-backend-state-bucket-$CLIENT_AWS_ACCOUNT_ID" \
+          -backend-config="bucket=xilution-terraform-backend-state-bucket-$CLIENT_AWS_ACCOUNT" \
           -backend-config="dynamodb_table=xilution-terraform-backend-lock-table"
   build:
     commands:
@@ -17,6 +17,3 @@ phases:
         terraform apply \
           -var="organization_id=$XILUTION_ORGANIZATION_ID" \
           -auto-approve
-  post_build:
-    commands:
-      - unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN

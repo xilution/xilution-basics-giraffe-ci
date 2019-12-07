@@ -3,6 +3,11 @@
 ## Prerequisites
 
 1. Install [Terraform](https://www.terraform.io/)
+1. The following environment variables need to be in scope.
+    ```
+    export XILUTION_ORGANIZATION_ID={Xilution Organization or Sub-organization ID}
+    export CLIENT_AWS_ACCOUNT={Client AWS Account ID}
+    ```
 
 ## Build the CodeBuild Image
 
