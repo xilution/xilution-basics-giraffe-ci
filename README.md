@@ -9,6 +9,12 @@
     export CLIENT_AWS_ACCOUNT={Client AWS Account ID}
     ```
 
+    Check the values
+    ```
+    echo $XILUTION_ORGANIZATION_ID
+    echo $CLIENT_AWS_ACCOUNT
+    ```
+
 ## Build the CodeBuild Image
 
 ```
