@@ -132,3 +132,7 @@ resource "aws_route_table_association" "xilution_private_route_table_association
   route_table_id = aws_route_table.xilution_private_route_table.id
   subnet_id = aws_subnet.xilution_private_subnet_2.id
 }
+
+# TODO - add nfs
+
+# TODO - add k8s
