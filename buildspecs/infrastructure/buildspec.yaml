@@ -5,7 +5,6 @@ phases:
       docker: 18
   pre_build:
     commands:
-      - git config --global url."https://$XILUTION_GITHUB_TOKEN:@github.com/".insteadOf "https://github.com/"
       - |
         terraform init \
           -backend-config="role_arn=arn:aws:iam::$CLIENT_AWS_ACCOUNT:role/xilution-developer-role" \

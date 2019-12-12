@@ -5,14 +5,12 @@
 1. Install [Terraform](https://www.terraform.io/)
 1. The following environment variables need to be in scope.
     ```
-    export XILUTION_GITHUB_TOKEN=$GITHUB_TOKEN
     export XILUTION_ORGANIZATION_ID={Xilution Organization or Sub-organization ID}
     export CLIENT_AWS_ACCOUNT={Client AWS Account ID}
     ```
 
     Check the values
     ```
-    echo $XILUTION_GITHUB_TOKEN
     echo $XILUTION_ORGANIZATION_ID
     echo $CLIENT_AWS_ACCOUNT
     ```
