@@ -17,29 +17,27 @@
     echo $CLIENT_AWS_ACCOUNT
     ```
 
-## Build the CodeBuild Image
+## Pull the CodeBuild Image
 
 ```
-git clone https://github.com/xilution/xilution-codebuild-docker-images.git
-cd xilution-codebuild-docker-images
-make build-standard-2.0
+
 ```
 
 ## Initialize this Repo
 
 ```
-make submodules
+make submodules-init
+make pull-docker-image
 make init
 ```
 
 ## To Verify
 
-Run `make init && make verify`
+Run `make verify`
 
 ## To Test Pipeline Infrastructure Step
 
 Run `make test-pipeline-infrastructure`
-
 
 ## To Uninstall the infrastructure
 

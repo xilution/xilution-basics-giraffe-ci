@@ -26,9 +26,6 @@ init:
 submodules-init:
 	git submodule update --init
 
-submodules-update:
-	git submodule update --remote
-
 verify:
 	terraform validate
 
@@ -40,10 +37,10 @@ test-pipeline-infrastructure:
 	echo "XILUTION_GITHUB_TOKEN=$(XILUTION_GITHUB_TOKEN)\nXILUTION_ORGANIZATION_ID=$(XILUTION_ORGANIZATION_ID)\nCLIENT_AWS_ACCOUNT=$(CLIENT_AWS_ACCOUNT)" > ./properties.txt
 	/bin/bash ./aws-codebuild-docker-images/local_builds/codebuild_build.sh \
 		-i $(AWS_ACCOUNT).dkr.ecr.$(AWS_REGION).amazonaws.com/xilution/codebuild/standard-2.0:latest \
-		-b /codebuild/output/srcDownload/secSrc/build_specs/buildspec.yaml \
+		-b /codebuild/output/srcDownload/secSrc/buildspecs/buildspec.yaml \
 		-a ./output \
 		-c \
 		-e ./properties.txt \
 		-s . \
-		-s build_specs:./xilution-buildspecs/account/infrastructure
+		-s buildspecs:./buildspecs/infrastructure
 	rm -rf ./properties.txt
