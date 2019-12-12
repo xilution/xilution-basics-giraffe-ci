@@ -15,12 +15,6 @@
     echo $CLIENT_AWS_ACCOUNT
     ```
 
-## Pull the CodeBuild Image
-
-```
-
-```
-
 ## Initialize this Repo
 
 ```
