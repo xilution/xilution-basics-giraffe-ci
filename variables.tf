@@ -13,13 +13,3 @@ variable "k8s_cluster_name" {
   description = "The Kubernetes Cluster Name"
   default = "xilution-k8s"
 }
-
-variable "master_username" {
-  type = string
-  description = "The Database Username"
-}
-
-variable "master_password" {
-  type = string
-  description = "The Database Password"
-}
