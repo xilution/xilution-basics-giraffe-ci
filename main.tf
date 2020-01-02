@@ -193,6 +193,7 @@ module "eks" {
     aws_subnet.xilution_public_subnet_2.id
   ]
   vpc_id = aws_vpc.xilution_vpc.id
+  kubeconfig_aws_authenticator_additional_args = ["-r", "arn:aws:iam::${var.client_aws_account}:role/xilution-developer-role"]
   worker_groups = [
     {
       instance_type = "t3.medium"
