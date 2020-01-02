@@ -65,14 +65,7 @@ resource "aws_internet_gateway" "xilution_internet_gateway" {
   }
 }
 
-resource "aws_vpn_gateway_attachment" "xilution_vpn_gateway_attachment" {
-  depends_on = [aws_internet_gateway.xilution_internet_gateway]
-  vpc_id = aws_vpc.xilution_vpc.id
-  vpn_gateway_id = aws_internet_gateway.xilution_internet_gateway.id
-}
-
 resource "aws_eip" "xilution_elastic_ip" {
-  depends_on = [aws_vpn_gateway_attachment.xilution_vpn_gateway_attachment]
   tags = {
     xilution_organization_id = var.organization_id
     originator = "xilution.com"
