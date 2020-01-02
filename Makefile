@@ -12,7 +12,7 @@ infrastructure-plan:
 infrastructure-destroy:
 	terraform destroy \
 		-var="organization_id=$(XILUTION_ORGANIZATION_ID)" \
-		-var="client_aws_account=$(CLIENT_AWS_ACCOUNT)"
+		-var="client_aws_account=$(CLIENT_AWS_ACCOUNT)" \
 		-auto-approve
 
 init:
