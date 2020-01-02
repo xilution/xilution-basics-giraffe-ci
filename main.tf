@@ -73,7 +73,7 @@ resource "aws_eip" "xilution_elastic_ip" {
 }
 
 resource "aws_nat_gateway" "xilution_nat_gateway" {
-  allocation_id = aws_eip.xilution_elastic_ip.allocation_id
+  allocation_id = aws_eip.xilution_elastic_ip.id
   subnet_id = aws_subnet.xilution_public_subnet_1.id
   tags = {
     xilution_organization_id = var.organization_id
