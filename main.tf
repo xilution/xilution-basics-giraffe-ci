@@ -58,6 +58,7 @@ resource "aws_subnet" "xilution_private_subnet_2" {
 }
 
 resource "aws_internet_gateway" "xilution_internet_gateway" {
+  vpc_id = aws_vpc.xilution_vpc.id
   tags = {
     xilution_organization_id = var.organization_id
     originator = "xilution.com"
