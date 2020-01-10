@@ -177,9 +177,9 @@ resource "aws_efs_mount_target" "mount_target_2" {
   ]
 }
 
-
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
+  version = "v7.0.1"
   cluster_name = var.k8s_cluster_name
   cluster_version = "1.14"
   subnets = [
