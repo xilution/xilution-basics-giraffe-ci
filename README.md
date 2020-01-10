@@ -1,4 +1,4 @@
-# xilution-aws-account-infrastructure
+# xilution-basics-giraffe-ci
 
 ## Prerequisites
 
