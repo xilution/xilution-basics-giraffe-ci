@@ -1,4 +1,10 @@
 version: 0.2
+
+env:
+  secrets-manager:
+    DOCKER_USERNAME: xilution-docker-hub-credentials:username
+    DOCKER_PASSWORD: xilution-docker-hub-credentials:password
+
 phases:
   install:
     runtime-versions:
@@ -20,4 +26,6 @@ phases:
         terraform apply \
           -var="organization_id=$XILUTION_ORGANIZATION_ID" \
           -var="client_aws_account=$CLIENT_AWS_ACCOUNT" \
+          -var="docker_username=$DOCKER_USERNAME" \
+          -var="docker_password=$DOCKER_PASSWORD" \
           -auto-approve
