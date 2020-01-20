@@ -17,6 +17,14 @@ infrastructure-destroy:
 		-var="docker_password=nonsense" \
 		-auto-approve
 
+uninstall-prometheus:
+	helm tiller run tiller -- helm delete prometheus
+	helm tiller run tiller -- helm del --purge prometheus
+
+uninstall-grafana:
+	helm tiller run tiller -- helm delete grafana
+	helm tiller run tiller -- helm del --purge grafana
+
 init:
 	terraform init \
 		-backend-config="key=terraform.tfstate" \
