@@ -10,6 +10,7 @@
     export CLIENT_AWS_ACCOUNT={Client AWS Account ID}
     export CLIENT_AWS_REGION={Client AWS Region}
     export K8S_CLUSTER_NAME=xilution-k8s
+    
     ```
 
     Check the values
@@ -18,6 +19,7 @@
     echo $CLIENT_AWS_ACCOUNT
     echo $CLIENT_AWS_REGION
     echo $K8S_CLUSTER_NAME
+    
     ```
 
 ## To pull the CodeBuild docker image
