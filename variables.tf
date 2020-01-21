@@ -13,13 +13,3 @@ variable "k8s_cluster_name" {
   description = "The Kubernetes Cluster Name"
   default = "xilution-k8s"
 }
-
-variable "docker_username" {
-  type = string
-  description = "The Docker Hub username"
-}
-
-variable "docker_password" {
-  type = string
-  description = "The Docker Hub password"
-}
