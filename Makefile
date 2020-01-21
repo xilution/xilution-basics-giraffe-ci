@@ -13,8 +13,6 @@ infrastructure-destroy:
 	terraform destroy \
 		-var="organization_id=$(XILUTION_ORGANIZATION_ID)" \
 		-var="client_aws_account=$(CLIENT_AWS_ACCOUNT)" \
-		-var="docker_username=nonsense" \
-		-var="docker_password=nonsense" \
 		-auto-approve
 
 uninstall-prometheus:
