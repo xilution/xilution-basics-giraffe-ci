@@ -37,6 +37,8 @@ Run `make submodules-update`
 ## To access to a client's account
 
 ```
+unset AWS_PROFILE
+unset AWS_REGION
 update-xilution-profile.sh $XILUTION_SHARED_ACCOUNT_ID $XILUTION_USER_ID $XILUTION_PROD_ACCOUNT_ID xilution-developer-role xilution-prod {mfa-code}
 assume-client-role.sh $CLIENT_AWS_ACCOUNT xilution-developer-role xilution-prod client-profile
 export AWS_PROFILE=client-profile
