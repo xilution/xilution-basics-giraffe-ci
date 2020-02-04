@@ -39,7 +39,7 @@ Run `make submodules-update`
 ```
 unset AWS_PROFILE
 unset AWS_REGION
-update-xilution-profile.sh $XILUTION_SHARED_ACCOUNT_ID $XILUTION_USER_ID $XILUTION_PROD_ACCOUNT_ID xilution-developer-role xilution-prod {mfa-code}
+update-xilution-profile.sh $AWS_SHARED_ACCOUNT_ID $AWS_USER_ID $AWS_PROD_ACCOUNT_ID xilution-developer-role xilution-prod {mfa-code}
 assume-client-role.sh $CLIENT_AWS_ACCOUNT xilution-developer-role xilution-prod client-profile
 export AWS_PROFILE=client-profile
 export AWS_REGION=$CLIENT_AWS_REGION
