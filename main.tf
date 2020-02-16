@@ -1,5 +1,7 @@
 data "aws_region" "current" {}
 
+# Network (VPN, Subnets, Etc.)
+
 resource "aws_vpc" "xilution_vpc" {
   cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -129,6 +131,8 @@ resource "aws_route_table_association" "xilution_private_route_table_association
   subnet_id = aws_subnet.xilution_private_subnet_2.id
 }
 
+# Network File System
+
 resource "aws_efs_file_system" "nfs" {
   tags = {
     xilution_organization_id = var.organization_id
@@ -176,6 +180,8 @@ resource "aws_efs_mount_target" "mount_target_2" {
     aws_security_group.mount_target_security_group.id
   ]
 }
+
+# Kubernetes
 
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
