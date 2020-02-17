@@ -301,7 +301,7 @@ resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
     "Duration": 600000,
     "MetricDataQueries": [
       {
-        "Id": "${uuid()}",
+        "Id": "client-metrics-reporter-lambda-duration",
         "MetricStat": {
           "Metric": {
             "Namespace": "AWS/Lambda",
