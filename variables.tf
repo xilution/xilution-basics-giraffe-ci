@@ -3,6 +3,12 @@ variable "organization_id" {
   description = "The Xilution Account Organization ID or Xilution Account Sub-Organization ID"
 }
 
+variable "product_id" {
+  type = string
+  description = "The Product ID"
+  default = "2ef2593165b143a9b14bc393e6ce90d9"
+}
+
 variable "pipeline_id" {
   type = string
   description = "The Pipeline ID"

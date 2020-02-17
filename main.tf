@@ -298,6 +298,9 @@ resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
   arn = data.aws_lambda_function.metrics-reporter-lambda.arn
   input = <<-DOC
   {
+    "Environment": "prod",
+    "OrganizationId": "${var.organization_id}",
+    "ProductId": "${var.product_id}",
     "Duration": 600000,
     "MetricDataQueries": [
       {
@@ -317,6 +320,12 @@ resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
           "Stat": "Average",
           "Unit": "Milliseconds"
         }
+      }
+    ],
+    "MetricNameMaps": [
+      {
+        "Id": "client_metrics_reporter_lambda_duration",
+        "MetricName": "client-metrics-reporter-lambda-duration"
       }
     ]
   }
