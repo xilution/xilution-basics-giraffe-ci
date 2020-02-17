@@ -1,5 +1,13 @@
 data "aws_region" "current" {}
 
+data "aws_iam_role" "cloudwatch-events-rule-invocation-role" {
+  name = "xilution-cloudwatch-events-rule-invocation-role"
+}
+
+data "aws_lambda_function" "metrics-reporter-lambda" {
+  function_name = "xilution-client-metrics-reporter-lambda"
+}
+
 # Network (VPN, Subnets, Etc.)
 
 resource "aws_vpc" "xilution_vpc" {
@@ -188,6 +196,14 @@ module "eks" {
   version = "v7.0.1"
   cluster_name = var.k8s_cluster_name
   cluster_version = "1.14"
+  # See: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  cluster_enabled_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
+  ]
   subnets = [
     aws_subnet.xilution_public_subnet_1.id,
     aws_subnet.xilution_public_subnet_2.id
@@ -211,6 +227,10 @@ module "eks" {
         }
       ]
     }
+  ]
+  # Needed for Container Insights
+  workers_additional_policies = [
+    "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
   ]
   tags = {
     xilution_organization_id = var.organization_id
@@ -247,13 +267,82 @@ resource "null_resource" "k8s_configure" {
     command = "sleep 30"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-grafana.sh"
-  }
-  provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-prometheus.sh"
+    command = "/bin/bash ${path.module}/scripts/install-container-insights.sh ${data.aws_region.current.name} ${var.k8s_cluster_name}"
   }
   provisioner "local-exec" {
     command = "/bin/bash ${path.module}/scripts/install-cluster-autoscaler.sh ${data.aws_region.current.name} ${var.k8s_cluster_name}"
   }
 }
 
+# Metrics
+
+resource "aws_cloudwatch_event_rule" "giraffe-cloudwatch-every-ten-minute-event-rule" {
+  name = "giraffe-${var.pipeline_id}-cloudwatch-event-rule"
+  schedule_expression = "rate(10 minutes)"
+  role_arn = data.aws_iam_role.cloudwatch-events-rule-invocation-role.arn
+  tags = {
+    xilution_organization_id = var.organization_id
+    originator = "xilution.com"
+  }
+}
+
+resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
+  rule = aws_cloudwatch_event_rule.giraffe-cloudwatch-every-ten-minute-event-rule
+  arn = data.aws_lambda_function.metrics-reporter-lambda.arn
+  input = <<-DOC
+  {
+    "Duration": 600000,
+    "MetricDataQueries": [
+      {
+        "Id": "${uuid()}",
+        "MetricStat": {
+          "Metric": {
+            "Namespace": "string",
+            "MetricName": "string",
+            "Dimensions": [
+              {
+                "Name": "string",
+                "Value": "string"
+              }
+            ]
+          },
+          "Period": integer,
+          "Stat": "string",
+          "Unit": "string"
+        },
+        "Expression": "string",
+        "Label": "string",
+        "ReturnData": boolean,
+        "Period": integer
+      }
+    ]
+  }
+  DOC
+}
+
+# Dashboards
+
+resource "aws_cloudwatch_dashboard" "giraffe-cloudwatch-dashboard" {
+  dashboard_name = "xilution-giraffe-${var.pipeline_id}-dashboard"
+
+  dashboard_body = <<-EOF
+  {
+    "widgets": [
+      {
+        "type":"metric",
+        "x":0,
+        "y":0,
+        "width":3,
+        "height":3,
+        "properties":{
+          "markdown":"Hello world"
+        }
+      }
+    ]
+  }
+  EOF
+  tags = {
+    xilution_organization_id = var.organization_id
+    originator = "xilution.com"
+  }
+}
