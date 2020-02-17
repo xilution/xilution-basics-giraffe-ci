@@ -341,8 +341,4 @@ resource "aws_cloudwatch_dashboard" "giraffe-cloudwatch-dashboard" {
     ]
   }
   EOF
-  tags = {
-    xilution_organization_id = var.organization_id
-    originator = "xilution.com"
-  }
 }
