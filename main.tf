@@ -287,7 +287,7 @@ resource "aws_cloudwatch_event_rule" "giraffe-cloudwatch-every-ten-minute-event-
 }
 
 resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
-  rule = aws_cloudwatch_event_rule.giraffe-cloudwatch-every-ten-minute-event-rule
+  rule = aws_cloudwatch_event_rule.giraffe-cloudwatch-every-ten-minute-event-rule.name
   arn = data.aws_lambda_function.metrics-reporter-lambda.arn
   input = <<-DOC
   {
@@ -306,14 +306,14 @@ resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
               }
             ]
           },
-          "Period": integer,
+          "Period": 60,
           "Stat": "string",
           "Unit": "string"
         },
         "Expression": "string",
         "Label": "string",
-        "ReturnData": boolean,
-        "Period": integer
+        "ReturnData": true,
+        "Period": 60
       }
     ]
   }
