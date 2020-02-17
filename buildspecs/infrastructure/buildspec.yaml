@@ -23,6 +23,7 @@ phases:
       - |
         terraform apply \
           -var="organization_id=$XILUTION_ORGANIZATION_ID" \
+          -var="pipeline_id=$PIPELINE_ID" \
           -var="xilution_aws_account=$XILUTION_AWS_ACCOUNT" \
           -var="xilution_aws_region=$XILUTION_AWS_REGION" \
           -var="xilution_environment=$XILUTION_ENVIRONMENT" \
