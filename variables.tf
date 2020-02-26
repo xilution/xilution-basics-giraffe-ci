@@ -14,6 +14,11 @@ variable "pipeline_id" {
   description = "The Pipeline ID"
 }
 
+variable "client_aws_account" {
+  type = string
+  description = "The Xilution Client AWS Account ID"
+}
+
 variable "xilution_aws_account" {
   type = string
   description = "The Xilution AWS Account ID"
@@ -29,7 +34,22 @@ variable "xilution_environment" {
   description = "The Xilution Environment"
 }
 
-variable "client_aws_account" {
+variable "master_username" {
   type = string
-  description = "The Xilution Client AWS Account ID"
+  description = "The Database Username"
+}
+
+variable "master_password" {
+  type = string
+  description = "The Database Password"
+}
+
+variable "docker_username" {
+  type = string
+  description = "The Docker Hub username"
+}
+
+variable "docker_password" {
+  type = string
+  description = "The Docker Hub password"
 }
