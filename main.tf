@@ -35,10 +35,14 @@ data "aws_lambda_function" "metrics-reporter-lambda" {
   function_name = "xilution-client-metrics-reporter-lambda"
 }
 
+locals {
+  k8s_cluster_name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}"
+}
+
 # Network File System
 
 resource "aws_efs_file_system" "nfs" {
-  reference_name = "xilution-giraffe-${var.pipeline_id}"
+  creation_token = "xilution-giraffe-${var.pipeline_id}"
   tags = {
     xilution_organization_id = var.organization_id
     originator = "xilution.com"
@@ -163,7 +167,7 @@ resource "aws_db_subnet_group" "aurora" {
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
   version = "v7.0.1"
-  cluster_name = "xilution-giraffe-${var.pipeline_id}"
+  cluster_name = local.k8s_cluster_name
   cluster_version = "1.14"
   # See: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
   cluster_enabled_log_types = [
@@ -212,7 +216,7 @@ resource "null_resource" "k8s_configure" {
     module.eks
   ]
   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name xilution-giraffe-${var.pipeline_id}"
+    command = "aws eks update-kubeconfig --name ${local.k8s_cluster_name}"
   }
   provisioner "local-exec" {
     command = "/bin/bash ${path.module}/scripts/install-namespaces.sh"
@@ -236,10 +240,10 @@ resource "null_resource" "k8s_configure" {
     command = "sleep 30"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-container-insights.sh ${data.aws_region.current.name} xilution-giraffe-${var.pipeline_id}"
+    command = "/bin/bash ${path.module}/scripts/install-container-insights.sh ${data.aws_region.current.name} ${local.k8s_cluster_name}"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-cluster-autoscaler.sh ${data.aws_region.current.name} xilution-giraffe-${var.pipeline_id}"
+    command = "/bin/bash ${path.module}/scripts/install-cluster-autoscaler.sh ${data.aws_region.current.name} ${local.k8s_cluster_name}"
   }
   provisioner "local-exec" {
     command = "/bin/bash ${path.module}/scripts/install-regcred-secret.sh ${var.docker_username} ${var.docker_password}"
