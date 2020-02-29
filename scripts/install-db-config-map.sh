@@ -4,6 +4,7 @@ WORDPRESS_USERNAME=$1
 WORDPRESS_DB_HOST=$2
 
 cat <<EOF >./config-map.yaml
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:

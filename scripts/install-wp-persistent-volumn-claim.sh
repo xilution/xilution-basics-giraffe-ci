@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cat <<EOF >./persistent-volumn-claim.yaml
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

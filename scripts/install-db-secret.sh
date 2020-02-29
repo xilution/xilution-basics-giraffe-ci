@@ -3,6 +3,7 @@
 WORDPRESS_DB_PASSWORD=$1
 
 cat <<EOF >./secrets.yaml
+---
 apiVersion: v1
 kind: Secret
 metadata:
