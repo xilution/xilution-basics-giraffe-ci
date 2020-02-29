@@ -7,7 +7,7 @@
 1. The following environment variables need to be in scope.
     ```
     export XILUTION_ORGANIZATION_ID={Xilution Organization or Sub-organization ID}
-    export PIPELINE_ID={Pipeline ID}
+    export PIPELINE_ID={Giraffe Pipeline ID}
     export XILUTION_AWS_ACCOUNT=$AWS_PROD_ACCOUNT_ID
     export XILUTION_AWS_REGION=us-east-1
     export XILUTION_ENVIRONMENT=prod
@@ -47,6 +47,7 @@ unset AWS_PROFILE
 unset AWS_REGION
 update-xilution-mfa-profile.sh $AWS_SHARED_ACCOUNT_ID $AWS_USER_ID {mfa-code}
 assume-client-role.sh $AWS_PROD_ACCOUNT_ID $CLIENT_AWS_ACCOUNT xilution-developer-role xilution-developer-role xilution-prod client-profile
+aws sts get-caller-identity --profile client-profile
 export AWS_PROFILE=client-profile
 export AWS_REGION=$CLIENT_AWS_REGION
 
