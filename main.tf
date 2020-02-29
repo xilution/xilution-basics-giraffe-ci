@@ -257,6 +257,9 @@ resource "null_resource" "k8s_configure" {
   provisioner "local-exec" {
     command = "/bin/bash ${path.module}/scripts/install-wp-persistent-volumn-claim.sh"
   }
+  provisioner "local-exec" {
+    command = "/bin/bash ${path.module}/scripts/install-nginx-ingress-controller.sh"
+  }
 }
 
 # Metrics
