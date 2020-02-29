@@ -21,15 +21,11 @@ infrastructure-destroy:
 		-var="xilution_aws_region=$(XILUTION_AWS_REGION)" \
 		-var="xilution_environment=$(XILUTION_ENVIRONMENT)" \
 		-var="client_aws_account=$(CLIENT_AWS_ACCOUNT)" \
+		-var="master_username=nonsense" \
+		-var="master_password=nonsense" \
+		-var="docker_username=nonsense" \
+		-var="docker_password=nonsense" \
 		-auto-approve
-
-uninstall-prometheus:
-	helm tiller run tiller -- helm delete prometheus
-	helm tiller run tiller -- helm del --purge prometheus
-
-uninstall-grafana:
-	helm tiller run tiller -- helm delete grafana
-	helm tiller run tiller -- helm del --purge grafana
 
 init:
 	terraform init \

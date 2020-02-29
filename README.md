@@ -8,12 +8,11 @@
     ```
     export XILUTION_ORGANIZATION_ID={Xilution Organization or Sub-organization ID}
     export PIPELINE_ID={Pipeline ID}
-    export XILUTION_AWS_ACCOUNT={Xilution AWS Account ID}
-    export XILUTION_AWS_REGION={Xilution AWS Region}
-    export XILUTION_ENVIRONMENT={Xilution Environment}
+    export XILUTION_AWS_ACCOUNT=$AWS_PROD_ACCOUNT_ID
+    export XILUTION_AWS_REGION=us-east-1
+    export XILUTION_ENVIRONMENT=prod
     export CLIENT_AWS_ACCOUNT={Client AWS Account ID}
     export CLIENT_AWS_REGION=us-east-1
-    export K8S_CLUSTER_NAME=xilution-k8s
     
     ```
 
@@ -26,7 +25,6 @@
     echo $XILUTION_ENVIRONMENT
     echo $CLIENT_AWS_ACCOUNT
     echo $CLIENT_AWS_REGION
-    echo $K8S_CLUSTER_NAME
     
     ```
 
@@ -67,6 +65,8 @@ Run `make verify`
 Run `make test-pipeline-infrastructure`
 
 ## To access a client's k8s cluster
+
+Note: K8S_CLUSTER_NAME takes the form of "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}"
 
 Run `aws eks update-kubeconfig --name $K8S_CLUSTER_NAME` to update your local kubeconfig file.
 
