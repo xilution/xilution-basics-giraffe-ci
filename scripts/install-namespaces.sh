@@ -22,6 +22,13 @@ metadata:
   name: wordpress
   labels:
     name: wordpress
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress-nginx
+  labels:
+    name: ingress-nginx
 EOF
 kubectl apply -f namespaces.yaml
 rm -rf namespaces.yaml
