@@ -5,19 +5,8 @@
 DOCKER_USERNAME=$1
 DOCKER_PASSWORD=$2
 
-docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" https://index.docker.io/v1/
-ENCODED_DOCKER_CONFIG_JSON=$(base64 ~/.docker/config.json)
-cat <<EOF >./docker-secrets.yaml
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: regcred
-  namespace: wordpress
-data:
-  .dockerconfigjson: ${ENCODED_DOCKER_CONFIG_JSON}
-type: kubernetes.io/dockerconfigjson
-EOF
-cat docker-secrets.yaml
-kubectl apply -f docker-secrets.yaml
-rm -rf docker-secrets.yaml
+kubectl create secret docker-registry regcred \
+  --namespace wordpress \
+  --docker-server=https://index.docker.io/v1/ \
+  --docker-username="${DOCKER_USERNAME}" \
+  --docker-password="${DOCKER_PASSWORD}"
