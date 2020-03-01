@@ -18,5 +18,6 @@ data:
   .dockerconfigjson: "${ENCODED_DOCKER_CONFIG_JSON}"
 type: kubernetes.io/dockerconfigjson
 EOF
+cat docker-secrets.yaml
 kubectl apply -f docker-secrets.yaml
 rm -rf docker-secrets.yaml
