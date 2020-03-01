@@ -5,3 +5,4 @@ helm
 config-map-aws-auth_xilution-k8s.yaml
 kubeconfig_xilution-k8s
 properties.txt
+*.tfstate
