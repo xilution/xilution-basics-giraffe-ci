@@ -15,7 +15,7 @@ metadata:
   name: regcred
   namespace: wordpress
 data:
-  .dockerconfigjson: ${ENCODED_DOCKER_CONFIG_JSON}
+  .dockerconfigjson: "${ENCODED_DOCKER_CONFIG_JSON}"
 type: kubernetes.io/dockerconfigjson
 EOF
 kubectl apply -f docker-secrets.yaml
