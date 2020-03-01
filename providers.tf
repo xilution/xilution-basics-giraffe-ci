@@ -5,3 +5,7 @@ provider "aws" {
   region = "us-east-1"
   version = "2.41.0"
 }
+
+provider "null" {
+  version = "2.1"
+}
