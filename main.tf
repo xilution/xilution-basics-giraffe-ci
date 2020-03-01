@@ -215,6 +215,9 @@ resource "null_resource" "k8s_configure" {
   depends_on = [
     module.eks
   ]
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = "aws eks update-kubeconfig --name ${local.k8s_cluster_name}"
   }
