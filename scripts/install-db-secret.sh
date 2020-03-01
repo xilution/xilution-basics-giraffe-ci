@@ -2,7 +2,7 @@
 
 WORDPRESS_DB_PASSWORD=$1
 
-cat <<EOF >./secrets.yaml
+cat <<EOF >./db-secrets.yaml
 ---
 apiVersion: v1
 kind: Secret
@@ -13,5 +13,5 @@ type: Opaque
 data:
   password: ${WORDPRESS_DB_PASSWORD}
 EOF
-kubectl apply -f secrets.yaml
-rm -rf secrets.yaml
+kubectl apply -f db-secrets.yaml
+rm -rf db-secrets.yaml
