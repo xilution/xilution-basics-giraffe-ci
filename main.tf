@@ -90,6 +90,17 @@ resource "aws_efs_mount_target" "mount_target_2" {
   ]
 }
 
+resource "aws_ssm_parameter" "efs_filesystem_id" {
+  name        = "xilution-giraffe-${var.pipeline_id}-efs-filesystem-id"
+  description = "A Giraffe Filesystem ID"
+  type        = "String"
+  value       = aws_efs_file_system.nfs.id
+  tags = {
+    xilution_organization_id = var.organization_id
+    originator = "xilution.com"
+  }
+}
+
 # Database
 
 resource "aws_security_group" "mysql_security_group" {
@@ -156,6 +167,17 @@ resource "aws_db_subnet_group" "aurora" {
     data.aws_subnet.xilution_public_subnet_1.id,
     data.aws_subnet.xilution_public_subnet_2.id
   ]
+  tags = {
+    xilution_organization_id = var.organization_id
+    originator = "xilution.com"
+  }
+}
+
+resource "aws_ssm_parameter" "efs_filesystem_id" {
+  name        = "xilution-giraffe-${var.pipeline_id}-rds-cluster-endpoint"
+  description = "A Giraffe RDS Cluster Endpoint"
+  type        = "String"
+  value       = aws_rds_cluster.aurora.endpoint
   tags = {
     xilution_organization_id = var.organization_id
     originator = "xilution.com"
