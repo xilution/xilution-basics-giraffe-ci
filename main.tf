@@ -173,7 +173,7 @@ resource "aws_db_subnet_group" "aurora" {
   }
 }
 
-resource "aws_ssm_parameter" "efs_filesystem_id" {
+resource "aws_ssm_parameter" "rds_cluster_endpoint" {
   name        = "xilution-giraffe-${var.pipeline_id}-rds-cluster-endpoint"
   description = "A Giraffe RDS Cluster Endpoint"
   type        = "String"
