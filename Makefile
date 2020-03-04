@@ -50,12 +50,12 @@ verify:
 
 pull-docker-image:
 	aws ecr get-login --no-include-email --profile=xilution-prod | /bin/bash
-	docker pull $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/standard-2.0:latest
+	docker pull $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/docker-19:latest
 
 test-pipeline-infrastructure:
 	echo "XILUTION_ORGANIZATION_ID=$(XILUTION_ORGANIZATION_ID)\nPIPELINE_ID=$(PIPELINE_ID)\nXILUTION_AWS_ACCOUNT=$(XILUTION_AWS_ACCOUNT)\nXILUTION_AWS_REGION=$(XILUTION_AWS_REGION)\nXILUTION_ENVIRONMENT=$(XILUTION_ENVIRONMENT)\nCLIENT_AWS_ACCOUNT=$(CLIENT_AWS_ACCOUNT)" > ./properties.txt
 	/bin/bash ./aws-codebuild-docker-images/local_builds/codebuild_build.sh \
-		-i $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/standard-2.0:latest \
+		-i $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/docker-19:latest \
 		-p client-profile \
 		-a ./output/infrastructure \
 		-b /codebuild/output/srcDownload/secSrc/buildspecs/buildspec.yaml \
