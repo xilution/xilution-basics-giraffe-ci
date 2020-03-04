@@ -9,9 +9,6 @@ env:
     DOCKER_PASSWORD: xilution-docker-hub-credentials:password
 
 phases:
-  install:
-    runtime-versions:
-      docker: 18
   pre_build:
     commands:
       - |
