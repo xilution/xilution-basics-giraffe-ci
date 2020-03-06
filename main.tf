@@ -326,6 +326,7 @@ resource "aws_security_group" "support_launch_template_security_group" {
 
 resource "aws_launch_template" "support_launch_template" {
   name = "xilution-support-launch-template"
+  image_id = "ami-0a887e401f7654935"
   ebs_optimized = false
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -361,6 +362,10 @@ resource "aws_launch_template" "support_launch_template" {
   }
   capacity_reservation_specification {
     capacity_reservation_preference = "open"
+  }
+  tags = {
+    xilution_organization_id = var.organization_id
+    originator = "xilution.com"
   }
 }
 
