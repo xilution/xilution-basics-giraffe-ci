@@ -91,10 +91,10 @@ resource "aws_efs_mount_target" "mount_target_2" {
 }
 
 resource "aws_ssm_parameter" "efs_filesystem_id" {
-  name        = "xilution-giraffe-${var.pipeline_id}-efs-filesystem-id"
+  name = "xilution-giraffe-${var.pipeline_id}-efs-filesystem-id"
   description = "A Giraffe Filesystem ID"
-  type        = "String"
-  value       = aws_efs_file_system.nfs.id
+  type = "String"
+  value = aws_efs_file_system.nfs.id
   tags = {
     xilution_organization_id = var.organization_id
     originator = "xilution.com"
@@ -174,10 +174,10 @@ resource "aws_db_subnet_group" "aurora" {
 }
 
 resource "aws_ssm_parameter" "rds_cluster_endpoint" {
-  name        = "xilution-giraffe-${var.pipeline_id}-rds-cluster-endpoint"
+  name = "xilution-giraffe-${var.pipeline_id}-rds-cluster-endpoint"
   description = "A Giraffe RDS Cluster Endpoint"
-  type        = "String"
-  value       = aws_rds_cluster.aurora.endpoint
+  type = "String"
+  value = aws_rds_cluster.aurora.endpoint
   tags = {
     xilution_organization_id = var.organization_id
     originator = "xilution.com"
@@ -285,6 +285,84 @@ resource "null_resource" "k8s_configure" {
   }
   provisioner "local-exec" {
     command = "/bin/bash ${path.module}/scripts/install-nginx-ingress-controller.sh"
+  }
+}
+
+# Support Instance Template
+
+locals {
+  user_data = <<-EOF
+  #cloud-config
+  repo_update: true
+  repo_upgrade: all
+  runcmd:
+  - yum install -y amazon-efs-utils
+  - apt-get -y install amazon-efs-utils
+  - yum install -y nfs-utils
+  - apt-get -y install nfs-common
+  - file_system_id_1=${aws_efs_file_system.nfs.id}
+  - efs_mount_point_1=/mnt/efs/fs1
+  - mkdir -p "\$\{efs_mount_point_1\}"
+  - test -f "/sbin/mount.efs" && echo "\$\{file_system_id_1\}:/ \$\{efs_mount_point_1\} efs tls,_netdev" >> /etc/fstab || echo "\$\{file_system_id_1\}.efs.us-east-1.amazonaws.com:/ \$\{efs_mount_point_1\} nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0" >> /etc/fstab
+  - test -f "/sbin/mount.efs" && echo -e "\n[client-info]\nsource=liw" >> /etc/amazon/efs/efs-utils.conf
+  - mount -a -t efs,nfs4 defaults
+  EOF
+}
+
+resource "aws_security_group" "support_launch_template_security_group" {
+  name = "support_launch_template_security_group"
+  vpc_id = data.aws_vpc.xilution_vpc.id
+  ingress {
+    from_port = 22
+    protocol = "tcp"
+    to_port = 22
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    protocol = "-1"
+    to_port = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_launch_template" "support_launch_template" {
+  name = "xilution-support-launch-template"
+  ebs_optimized = false
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      encrypted = false
+      delete_on_termination = true
+      volume_size = 8
+      volume_type = "gp2"
+    }
+  }
+  network_interfaces {
+    associate_public_ip_address = true
+    delete_on_termination = true
+    device_index = 0
+    security_groups = [
+      aws_security_group.support_launch_template_security_group.id
+    ]
+    subnet_id = data.aws_subnet.xilution_public_subnet_1.id
+  }
+  instance_type = "t2.micro"
+  key_name = "xilution-beta"
+  monitoring {
+    enabled = false
+  }
+  placement {
+    tenancy = "default"
+  }
+  disable_api_termination = false
+  instance_initiated_shutdown_behavior = "stop"
+  user_data = base64encode(local.user_data)
+  credit_specification {
+    cpu_credits = "standard"
+  }
+  capacity_reservation_specification {
+    capacity_reservation_preference = "open"
   }
 }
 
