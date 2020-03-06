@@ -13,6 +13,7 @@
     export XILUTION_ENVIRONMENT=prod
     export CLIENT_AWS_ACCOUNT={Client AWS Account ID}
     export CLIENT_AWS_REGION=us-east-1
+    export K8S_CLUSTER_NAME={Kubernetes Cluster Name. Ex: xilution-giraffe-eb78c776}
     
     ```
 
@@ -25,6 +26,7 @@
     echo $XILUTION_ENVIRONMENT
     echo $CLIENT_AWS_ACCOUNT
     echo $CLIENT_AWS_REGION
+    echo $K8S_CLUSTER_NAME
     
     ```
 
