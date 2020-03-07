@@ -86,6 +86,10 @@ Reference: https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.h
 
 Run `make infrastructure-destroy`
 
-```
-aws ec2 run-instances
-```
+## To Launch a Support EC2 Instance
+
+You can use the Support EC2 Instance to interact with EFS.
+Once connected, you can run `cd /mnt/efs/fs1` to access the root of the filesystem.
+
+Run `./support/launch-bastion.sh` to start a bastion ec2 instance.
+The instance will auto terminate when you end the ssh session with `ctrl-c`.

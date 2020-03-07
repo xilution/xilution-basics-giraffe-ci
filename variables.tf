@@ -19,6 +19,11 @@ variable "client_aws_account" {
   description = "The Xilution Client AWS Account ID"
 }
 
+variable "client_aws_region" {
+  type = string
+  description = "The Xilution Client AWS Region"
+}
+
 variable "xilution_aws_account" {
   type = string
   description = "The Xilution AWS Account ID"

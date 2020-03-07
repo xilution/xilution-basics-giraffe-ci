@@ -35,10 +35,6 @@ data "aws_lambda_function" "metrics-reporter-lambda" {
   function_name = "xilution-client-metrics-reporter-lambda"
 }
 
-locals {
-  k8s_cluster_name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}"
-}
-
 # Network File System
 
 resource "aws_efs_file_system" "nfs" {
@@ -186,6 +182,10 @@ resource "aws_ssm_parameter" "rds_cluster_endpoint" {
 
 # Kubernetes
 
+locals {
+  k8s_cluster_name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}"
+}
+
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
   version = "v7.0.1"
@@ -288,7 +288,7 @@ resource "null_resource" "k8s_configure" {
   }
 }
 
-# Support Instance Template
+# Support Template
 
 locals {
   user_data = <<-EOF
@@ -304,6 +304,14 @@ locals {
   - test -f "/sbin/mount.efs" && echo "${aws_efs_file_system.nfs.id}:/ /mnt/efs/fs1 efs tls,_netdev" >> /etc/fstab || echo "${aws_efs_file_system.nfs.id}.efs.us-east-1.amazonaws.com:/ /mnt/efs/fs1 nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0" >> /etc/fstab
   - test -f "/sbin/mount.efs" && echo -e "\n[client-info]\nsource=liw" >> /etc/amazon/efs/efs-utils.conf
   - mount -a -t efs,nfs4 defaults
+  - export XILUTION_ORGANIZATION_ID=${var.organization_id}
+  - export PIPELINE_ID=${var.pipeline_id}
+  - export XILUTION_AWS_ACCOUNT=${var.xilution_aws_account}
+  - export XILUTION_AWS_REGION=${var.xilution_aws_region}
+  - export XILUTION_ENVIRONMENT=${var.xilution_environment}
+  - export CLIENT_AWS_ACCOUNT=${var.client_aws_account}
+  - export CLIENT_AWS_REGION=${var.client_aws_region}
+  - export K8S_CLUSTER_NAME=${local.k8s_cluster_name}
   EOF
 }
 
@@ -325,7 +333,7 @@ resource "aws_security_group" "support_launch_template_security_group" {
 }
 
 resource "aws_launch_template" "support_launch_template" {
-  name = "xilution-support-launch-template"
+  name = "xilution-giraffe-${var.pipeline_id}"
   image_id = "ami-0a887e401f7654935"
   ebs_optimized = false
   block_device_mappings {
