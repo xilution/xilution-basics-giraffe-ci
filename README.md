@@ -92,4 +92,9 @@ You can use the Support EC2 Instance to interact with EFS.
 Once connected, you can run `cd /mnt/efs/fs1` to access the root of the filesystem.
 
 Run `./support/launch-bastion.sh` to start a bastion ec2 instance.
-The instance will auto terminate when you end the ssh session with `ctrl-c`.
+
+Run `ssh -i ./key.pem -o "StrictHostKeyChecking=no" ec2-user@"$(yq r ./bastion.yaml public_dns_name)"` to start an bash session with the bastion.
+
+Run `exit` to end the bastion bash session.
+
+Run `./support/terminate-bastion.sh` to terminate the bastion ec2 instance.

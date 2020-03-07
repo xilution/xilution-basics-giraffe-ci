@@ -304,14 +304,6 @@ locals {
   - test -f "/sbin/mount.efs" && echo "${aws_efs_file_system.nfs.id}:/ /mnt/efs/fs1 efs tls,_netdev" >> /etc/fstab || echo "${aws_efs_file_system.nfs.id}.efs.us-east-1.amazonaws.com:/ /mnt/efs/fs1 nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0" >> /etc/fstab
   - test -f "/sbin/mount.efs" && echo -e "\n[client-info]\nsource=liw" >> /etc/amazon/efs/efs-utils.conf
   - mount -a -t efs,nfs4 defaults
-  - export XILUTION_ORGANIZATION_ID=${var.organization_id}
-  - export PIPELINE_ID=${var.pipeline_id}
-  - export XILUTION_AWS_ACCOUNT=${var.xilution_aws_account}
-  - export XILUTION_AWS_REGION=${var.xilution_aws_region}
-  - export XILUTION_ENVIRONMENT=${var.xilution_environment}
-  - export CLIENT_AWS_ACCOUNT=${var.client_aws_account}
-  - export CLIENT_AWS_REGION=${var.client_aws_region}
-  - export K8S_CLUSTER_NAME=${local.k8s_cluster_name}
   EOF
 }
 
@@ -355,7 +347,6 @@ resource "aws_launch_template" "support_launch_template" {
     subnet_id = data.aws_subnet.xilution_public_subnet_1.id
   }
   instance_type = "t2.micro"
-  key_name = "xilution-beta"
   monitoring {
     enabled = false
   }

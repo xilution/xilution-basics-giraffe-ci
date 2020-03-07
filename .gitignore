@@ -7,3 +7,5 @@ kubeconfig_xilution-k8s
 properties.txt
 *.tfstate
 env.sh
+key.pem
+bastion.yaml
