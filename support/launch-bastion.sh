@@ -3,7 +3,7 @@
 echo Enter Client AWS Account ID:
 read -r client_aws_account_id
 
-echo Enter Client AWS AWS Region:
+echo Enter Client AWS Region:
 read -r client_aws_region
 
 echo Enter MFA Code:
