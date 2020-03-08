@@ -296,9 +296,7 @@ locals {
   repo_update: true
   repo_upgrade: all
   runcmd:
-  - yum install -y amazon-efs-utils
   - apt-get -y install amazon-efs-utils
-  - yum install -y nfs-utils
   - apt-get -y install nfs-common
   - mkdir -p /mnt/efs/fs1
   - test -f "/sbin/mount.efs" && echo "${aws_efs_file_system.nfs.id}:/ /mnt/efs/fs1 efs tls,_netdev" >> /etc/fstab || echo "${aws_efs_file_system.nfs.id}.efs.us-east-1.amazonaws.com:/ /mnt/efs/fs1 nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0" >> /etc/fstab

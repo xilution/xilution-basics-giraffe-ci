@@ -84,7 +84,7 @@ Reference: https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.h
 
 ## To Uninstall the infrastructure
 
-Run `make infrastructure-destroy`
+Run `./support/destroy-infrastructure.sh`
 
 ## To Launch a Support EC2 Instance
 
