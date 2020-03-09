@@ -29,7 +29,7 @@ infrastructure-destroy:
 
 init:
 	terraform init \
-		-backend-config="key=terraform.tfstate" \
+		-backend-config="key=xilution-basics-giraffe/$(PIPELINE_ID)/terraform.tfstate" \
 		-backend-config="bucket=xilution-terraform-backend-state-bucket-$(CLIENT_AWS_ACCOUNT)" \
 		-backend-config="dynamodb_table=xilution-terraform-backend-lock-table" \
 		-var="organization_id=$(XILUTION_ORGANIZATION_ID)" \
