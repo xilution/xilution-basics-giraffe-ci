@@ -1,9 +1,6 @@
 version: 0.2
 
 env:
-  variables:
-    MASTER_USERNAME: wordpress
-    MASTER_PASSWORD: d29yZHByZXNz
   secrets-manager:
     DOCKER_USERNAME: xilution-docker-hub-credentials:username
     DOCKER_PASSWORD: xilution-docker-hub-credentials:password
@@ -20,7 +17,7 @@ phases:
       - export AWS_SESSION_TOKEN=`cat aws-creds.json | jq -r '.Credentials.SessionToken'`
       - |
         terraform init \
-          -backend-config="key=terraform.tfstate" \
+          -backend-config="key=xilution-basics-giraffe/$PIPELINE_ID/terraform.tfstate" \
           -backend-config="bucket=xilution-terraform-backend-state-bucket-$CLIENT_AWS_ACCOUNT" \
           -backend-config="dynamodb_table=xilution-terraform-backend-lock-table"
   build:
@@ -34,8 +31,6 @@ phases:
           -var="xilution_aws_account=$XILUTION_AWS_ACCOUNT" \
           -var="xilution_aws_region=$XILUTION_AWS_REGION" \
           -var="xilution_environment=$XILUTION_ENVIRONMENT" \
-          -var="master_username=$MASTER_USERNAME" \
-          -var="master_password=$MASTER_PASSWORD" \
           -var="docker_username=$DOCKER_USERNAME" \
           -var="docker_password=$DOCKER_PASSWORD" \
           -auto-approve

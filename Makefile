@@ -23,8 +23,6 @@ infrastructure-destroy:
 		-var="xilution_environment=$(XILUTION_ENVIRONMENT)" \
 		-var="client_aws_account=$(CLIENT_AWS_ACCOUNT)" \
 		-var="client_aws_region=$(CLIENT_AWS_REGION)" \
-		-var="master_username=nonsense" \
-		-var="master_password=nonsense" \
 		-var="docker_username=nonsense" \
 		-var="docker_password=nonsense" \
 		-auto-approve

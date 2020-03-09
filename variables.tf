@@ -11,7 +11,7 @@ variable "product_id" {
 
 variable "pipeline_id" {
   type = string
-  description = "The Pipeline ID"
+  description = "The Giraffe Pipeline ID"
 }
 
 variable "client_aws_account" {
@@ -37,16 +37,6 @@ variable "xilution_aws_region" {
 variable "xilution_environment" {
   type = string
   description = "The Xilution Environment"
-}
-
-variable "master_username" {
-  type = string
-  description = "The Database Username"
-}
-
-variable "master_password" {
-  type = string
-  description = "The Database Password"
 }
 
 variable "docker_username" {
