@@ -188,10 +188,6 @@ resource "null_resource" "k8s_configure" {
     command = "/bin/bash ${path.module}/scripts/install-cluster-autoscaler.sh ${data.aws_region.current.name} ${local.k8s_cluster_name}"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-regcred-secret.sh ${var.docker_username} ${var.docker_password}"
-    on_failure = "continue"
-  }
-  provisioner "local-exec" {
     command = "/bin/bash ${path.module}/scripts/install-nginx-ingress-controller.sh"
   }
 }

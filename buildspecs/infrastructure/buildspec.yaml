@@ -1,10 +1,5 @@
 version: 0.2
 
-env:
-  secrets-manager:
-    DOCKER_USERNAME: xilution-docker-hub-credentials:username
-    DOCKER_PASSWORD: xilution-docker-hub-credentials:password
-
 phases:
   pre_build:
     commands:
@@ -31,6 +26,4 @@ phases:
           -var="xilution_aws_account=$XILUTION_AWS_ACCOUNT" \
           -var="xilution_aws_region=$XILUTION_AWS_REGION" \
           -var="xilution_environment=$XILUTION_ENVIRONMENT" \
-          -var="docker_username=$DOCKER_USERNAME" \
-          -var="docker_password=$DOCKER_PASSWORD" \
           -auto-approve

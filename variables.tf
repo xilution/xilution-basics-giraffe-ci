@@ -38,13 +38,3 @@ variable "xilution_environment" {
   type = string
   description = "The Xilution Environment"
 }
-
-variable "docker_username" {
-  type = string
-  description = "The Docker Hub username"
-}
-
-variable "docker_password" {
-  type = string
-  description = "The Docker Hub password"
-}
