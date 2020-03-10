@@ -167,6 +167,9 @@ resource "null_resource" "k8s_configure" {
     command = "/bin/bash ${path.module}/scripts/install-efs-csi-driver.sh"
   }
   provisioner "local-exec" {
+    command = "/bin/bash ${path.module}/scripts/install-efs-persistent-volume.sh ${aws_efs_file_system.nfs.id}"
+  }
+  provisioner "local-exec" {
     command = "/bin/bash ${path.module}/scripts/install-metrics-server.sh"
   }
   provisioner "local-exec" {
