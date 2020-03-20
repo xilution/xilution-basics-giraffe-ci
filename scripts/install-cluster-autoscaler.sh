@@ -5,7 +5,6 @@
 AWS_REGION=$1
 CLUSTER_NAME=$2
 
-kubectl --namespace=kube-system wait --for=condition=Available --timeout=5m apiservices/v1beta1.metrics.k8s.io
 helm tiller run tiller -- helm install stable/cluster-autoscaler \
   --set rbac.create=true \
   --set cloudProvider="aws" \
