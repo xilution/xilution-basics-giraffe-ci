@@ -280,7 +280,7 @@ resource "aws_lambda_permission" "allow-giraffe-cloudwatch-every-ten-minute-even
 }
 
 resource "aws_cloudwatch_event_rule" "giraffe-cloudwatch-every-ten-minute-event-rule" {
-  name = "giraffe-${var.pipeline_id}-cloudwatch-event-rule"
+  name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}-cloudwatch-event-rule"
   schedule_expression = "rate(10 minutes)"
   role_arn = data.aws_iam_role.cloudwatch-events-rule-invocation-role.arn
   tags = {
@@ -331,7 +331,7 @@ resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
 # Dashboards
 
 resource "aws_cloudwatch_dashboard" "giraffe-cloudwatch-dashboard" {
-  dashboard_name = "xilution-giraffe-${var.pipeline_id}-dashboard"
+  dashboard_name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}-dashboard"
 
   dashboard_body = <<-EOF
   {
