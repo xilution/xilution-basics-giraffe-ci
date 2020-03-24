@@ -4,7 +4,7 @@ data "aws_vpc" "xilution_vpc" {
   filter {
     name = "tag:Name"
     values = [
-      "xilution"
+      "xilution-gazelle-${substr(var.gazelle_pipeline_id, 0, 8)}-vpc"
     ]
   }
 }
@@ -13,7 +13,7 @@ data "aws_subnet" "xilution_public_subnet_1" {
   filter {
     name = "tag:Name"
     values = [
-      "xilution-public-subnet-1"
+      "xilution-gazelle-${substr(var.gazelle_pipeline_id, 0, 8)}-public-subnet-1"
     ]
   }
 }
@@ -22,7 +22,7 @@ data "aws_subnet" "xilution_public_subnet_2" {
   filter {
     name = "tag:Name"
     values = [
-      "xilution-public-subnet-2"
+      "xilution-gazelle-${substr(var.gazelle_pipeline_id, 0, 8)}-public-subnet-2"
     ]
   }
 }
@@ -38,7 +38,7 @@ data "aws_lambda_function" "metrics-reporter-lambda" {
 # Network File System
 
 resource "aws_efs_file_system" "nfs" {
-  creation_token = "xilution-giraffe-${var.pipeline_id}"
+  creation_token = "xilution-giraffe-${var.giraffe_pipeline_id}"
   tags = {
     xilution_organization_id = var.organization_id
     originator = "xilution.com"
@@ -87,7 +87,7 @@ resource "aws_efs_mount_target" "mount_target_2" {
 }
 
 resource "aws_ssm_parameter" "efs_filesystem_id" {
-  name = "xilution-giraffe-${var.pipeline_id}-efs-filesystem-id"
+  name = "xilution-giraffe-${var.giraffe_pipeline_id}-efs-filesystem-id"
   description = "A Giraffe Filesystem ID"
   type = "String"
   value = aws_efs_file_system.nfs.id
@@ -100,7 +100,7 @@ resource "aws_ssm_parameter" "efs_filesystem_id" {
 # Kubernetes
 
 locals {
-  k8s_cluster_name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}"
+  k8s_cluster_name = "xilution-giraffe-${substr(var.giraffe_pipeline_id, 0, 8)}"
 }
 
 module "eks" {
@@ -227,7 +227,7 @@ resource "aws_security_group" "support_launch_template_security_group" {
 }
 
 resource "aws_launch_template" "support_launch_template" {
-  name = "xilution-giraffe-${var.pipeline_id}"
+  name = "xilution-giraffe-${var.giraffe_pipeline_id}"
   image_id = "ami-0a887e401f7654935"
   ebs_optimized = false
   block_device_mappings {
@@ -280,7 +280,7 @@ resource "aws_lambda_permission" "allow-giraffe-cloudwatch-every-ten-minute-even
 }
 
 resource "aws_cloudwatch_event_rule" "giraffe-cloudwatch-every-ten-minute-event-rule" {
-  name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}-cloudwatch-event-rule"
+  name = "xilution-giraffe-${substr(var.giraffe_pipeline_id, 0, 8)}-cloudwatch-event-rule"
   schedule_expression = "rate(10 minutes)"
   role_arn = data.aws_iam_role.cloudwatch-events-rule-invocation-role.arn
   tags = {
@@ -331,7 +331,7 @@ resource "aws_cloudwatch_event_target" "giraffe-cloudwatch-event-target" {
 # Dashboards
 
 resource "aws_cloudwatch_dashboard" "giraffe-cloudwatch-dashboard" {
-  dashboard_name = "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}-dashboard"
+  dashboard_name = "xilution-giraffe-${substr(var.giraffe_pipeline_id, 0, 8)}-dashboard"
 
   dashboard_body = <<-EOF
   {

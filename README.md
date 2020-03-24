@@ -7,7 +7,8 @@
 1. The following environment variables need to be in scope.
     ```
     export XILUTION_ORGANIZATION_ID={Xilution Organization or Sub-organization ID}
-    export PIPELINE_ID={Giraffe Pipeline ID}
+    export GAZELLE_PIPELINE_ID={Gazelle Pipeline ID}
+    export GIRAFFE_PIPELINE_ID={Giraffe Pipeline ID}
     export XILUTION_AWS_ACCOUNT=$AWS_PROD_ACCOUNT_ID
     export XILUTION_AWS_REGION=us-east-1
     export XILUTION_ENVIRONMENT=prod
@@ -20,7 +21,8 @@
     Check the values
     ```
     echo $XILUTION_ORGANIZATION_ID
-    echo $PIPELINE_ID
+    echo $GAZELLE_PIPELINE_ID
+    echo $GIRAFFE_PIPELINE_ID
     echo $XILUTION_AWS_ACCOUNT
     echo $XILUTION_AWS_REGION
     echo $XILUTION_ENVIRONMENT
@@ -69,7 +71,7 @@ Run `make test-pipeline-infrastructure`
 
 ## To access a client's k8s cluster
 
-Note: K8S_CLUSTER_NAME takes the form of "xilution-giraffe-${substr(var.pipeline_id, 0, 8)}"
+Note: K8S_CLUSTER_NAME takes the form of "xilution-giraffe-${substr(var.giraffe_pipeline_id, 0, 8)}"
 
 Run `aws eks update-kubeconfig --name $K8S_CLUSTER_NAME` to update your local kubeconfig file.
 

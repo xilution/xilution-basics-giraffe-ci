@@ -12,7 +12,7 @@ phases:
       - export AWS_SESSION_TOKEN=`cat aws-creds.json | jq -r '.Credentials.SessionToken'`
       - |
         terraform init \
-          -backend-config="key=xilution-basics-giraffe/$PIPELINE_ID/terraform.tfstate" \
+          -backend-config="key=xilution-basics-giraffe/$GIRAFFE_PIPELINE_ID/terraform.tfstate" \
           -backend-config="bucket=xilution-terraform-backend-state-bucket-$CLIENT_AWS_ACCOUNT" \
           -backend-config="dynamodb_table=xilution-terraform-backend-lock-table"
   build:
@@ -20,7 +20,8 @@ phases:
       - |
         terraform apply \
           -var="organization_id=$XILUTION_ORGANIZATION_ID" \
-          -var="pipeline_id=$PIPELINE_ID" \
+          -var="gazelle_pipeline_id=$GAZELLE_PIPELINE_ID" \
+          -var="giraffe_pipeline_id=$GIRAFFE_PIPELINE_ID" \
           -var="client_aws_account=$CLIENT_AWS_ACCOUNT" \
           -var="client_aws_region=$CLIENT_AWS_REGION" \
           -var="xilution_aws_account=$XILUTION_AWS_ACCOUNT" \
