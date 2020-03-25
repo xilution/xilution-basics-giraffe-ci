@@ -44,7 +44,7 @@ Run `make submodules-init`
 
 Run `make submodules-update`
 
-## To access to a client's account
+## To access a client's account
 
 ```
 unset AWS_PROFILE
