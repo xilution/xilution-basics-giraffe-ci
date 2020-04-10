@@ -40,7 +40,7 @@ Run `make pull-docker-image`
 
 Run `make submodules-init`
 
-## To updated the submodules
+## To update the submodules
 
 Run `make submodules-update`
 
@@ -95,7 +95,7 @@ Once connected, you can run `cd /mnt/efs/fs1` to access the root of the filesyst
 
 Run `./support/launch-bastion.sh` to start a bastion ec2 instance.
 
-Run `ssh -i ./key.pem -o "StrictHostKeyChecking=no" ec2-user@"$(yq r ./bastion.yaml public_dns_name)"` to start an bash session with the bastion.
+Run `ssh -i ./key.pem -o "StrictHostKeyChecking=no" ec2-user@"$(yq r ./bastion.yaml public_dns_name)"` to start a bash session with the bastion.
 
 Run `exit` to end the bastion bash session.
 
