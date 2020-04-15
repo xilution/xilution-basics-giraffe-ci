@@ -54,13 +54,26 @@ pull-docker-image:
 	aws ecr get-login --no-include-email --profile=xilution-prod | /bin/bash
 	docker pull $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/docker-19:latest
 
-test-pipeline-infrastructure:
+test-pipeline-infrastructure-up:
 	echo "XILUTION_ORGANIZATION_ID=$(XILUTION_ORGANIZATION_ID)\nGAZELLE_PIPELINE_ID=$(GAZELLE_PIPELINE_ID)\nGIRAFFE_PIPELINE_ID=$(GIRAFFE_PIPELINE_ID)\nXILUTION_AWS_ACCOUNT=$(XILUTION_AWS_ACCOUNT)\nXILUTION_AWS_REGION=$(XILUTION_AWS_REGION)\nXILUTION_ENVIRONMENT=$(XILUTION_ENVIRONMENT)\nCLIENT_AWS_ACCOUNT=$(CLIENT_AWS_ACCOUNT)" > ./properties.txt
 	/bin/bash ./aws-codebuild-docker-images/local_builds/codebuild_build.sh \
 		-i $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/docker-19:latest \
 		-p client-profile \
 		-a ./output/infrastructure \
 		-b /codebuild/output/srcDownload/secSrc/buildspecs/buildspec.yaml \
+		-c \
+		-e ./properties.txt \
+		-s . \
+		-s buildspecs:./buildspecs/infrastructure
+	rm -rf ./properties.txt
+
+test-pipeline-infrastructure-down:
+	echo "XILUTION_ORGANIZATION_ID=$(XILUTION_ORGANIZATION_ID)\nGAZELLE_PIPELINE_ID=$(GAZELLE_PIPELINE_ID)\nGIRAFFE_PIPELINE_ID=$(GIRAFFE_PIPELINE_ID)\nXILUTION_AWS_ACCOUNT=$(XILUTION_AWS_ACCOUNT)\nXILUTION_AWS_REGION=$(XILUTION_AWS_REGION)\nXILUTION_ENVIRONMENT=$(XILUTION_ENVIRONMENT)\nCLIENT_AWS_ACCOUNT=$(CLIENT_AWS_ACCOUNT)" > ./properties.txt
+	/bin/bash ./aws-codebuild-docker-images/local_builds/codebuild_build.sh \
+		-i $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/docker-19:latest \
+		-p client-profile \
+		-a ./output/infrastructure \
+		-b /codebuild/output/srcDownload/secSrc/buildspecs/buildspec-down.yaml \
 		-c \
 		-e ./properties.txt \
 		-s . \
