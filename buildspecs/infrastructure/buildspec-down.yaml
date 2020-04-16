@@ -10,6 +10,7 @@ phases:
       - export AWS_ACCESS_KEY_ID=`cat aws-creds.json | jq -r '.Credentials.AccessKeyId'`
       - export AWS_SECRET_ACCESS_KEY=`cat aws-creds.json | jq -r '.Credentials.SecretAccessKey'`
       - export AWS_SESSION_TOKEN=`cat aws-creds.json | jq -r '.Credentials.SessionToken'`
+      - aws eks update-kubeconfig --name $K8S_CLUSTER_NAME
       - |
         terraform init \
           -backend-config="key=xilution-basics-giraffe/$GIRAFFE_PIPELINE_ID/terraform.tfstate" \
@@ -17,6 +18,7 @@ phases:
           -backend-config="dynamodb_table=xilution-terraform-backend-lock-table"
   build:
     commands:
+      - kubectl delete svc ingress-nginx -n ingress-nginx
       - |
         terraform destroy \
           -var="organization_id=$XILUTION_ORGANIZATION_ID" \
