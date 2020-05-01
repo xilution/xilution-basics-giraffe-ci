@@ -107,14 +107,15 @@ resource "aws_iam_policy" "k8s_s3_access_policy" {
   name        = "k8s_s3_access_policy"
   path        = "/"
   description = "Kubernetes S3 Access Policy"
-  policy = <<EOF
+  policy = <<-EOF
   {
     "Version": "2012-10-17",
     "Statement": [
       {
+        "Sid": "Stmt1588334981789",
         "Action": [
-          "s3:ListBucket",
           "s3:GetObject",
+          "s3:ListBucket",
           "s3:PutObject"
         ],
         "Effect": "Allow",
