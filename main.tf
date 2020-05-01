@@ -101,6 +101,11 @@ resource "aws_ssm_parameter" "efs_filesystem_id" {
 
 locals {
   k8s_cluster_name = "xilution-giraffe-${substr(var.giraffe_pipeline_id, 0, 8)}"
+  k8s_data_transfer_bucket_name = "xilution-gazelle-${substr(var.gazelle_pipeline_id, 0, 8)}-data-transfer"
+}
+
+resource "aws_s3_bucket" "k8s_data_transfer_bucket" {
+  bucket = local.k8s_data_transfer_bucket_name
 }
 
 resource "aws_iam_policy" "k8s_s3_access_policy" {
@@ -119,7 +124,7 @@ resource "aws_iam_policy" "k8s_s3_access_policy" {
           "s3:PutObject"
         ],
         "Effect": "Allow",
-        "Resource": "*"
+        "Resource": "arn:aws:s3:::${local.k8s_data_transfer_bucket_name}/*"
       }
     ]
   }
