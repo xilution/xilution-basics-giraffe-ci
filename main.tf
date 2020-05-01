@@ -103,6 +103,28 @@ locals {
   k8s_cluster_name = "xilution-giraffe-${substr(var.giraffe_pipeline_id, 0, 8)}"
 }
 
+resource "aws_iam_policy" "k8s_s3_access_policy" {
+  name        = "k8s_s3_access_policy"
+  path        = "/"
+  description = "Kubernetes S3 Access Policy"
+  policy = <<EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "s3:ListBucket",
+          "s3:GetObject",
+          "s3:PutObject"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }
+  EOF
+}
+
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
   version = "v7.0.1"
@@ -142,7 +164,8 @@ module "eks" {
   ]
   # Needed for Container Insights
   workers_additional_policies = [
-    "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+    "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy",
+    aws_iam_policy.k8s_s3_access_policy.arn
   ]
   tags = {
     xilution_organization_id = var.organization_id
