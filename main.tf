@@ -120,9 +120,10 @@ resource "aws_iam_policy" "k8s_s3_access_policy" {
               "Sid": "VisualEditor0",
               "Effect": "Allow",
               "Action": [
-                  "s3:PutObject",
+                  "s3:DeleteObject",
                   "s3:GetObject",
-                  "s3:ListBucket"
+                  "s3:ListBucket",
+                  "s3:PutObject"
               ],
               "Resource": [
                   "arn:aws:s3:::xilution-*-data-transfer",
