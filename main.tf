@@ -114,20 +114,22 @@ resource "aws_iam_policy" "k8s_s3_access_policy" {
   description = "Kubernetes S3 Access Policy"
   policy = <<-EOF
   {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "Stmt1588334981789",
-        "Action": [
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:ListObjects",
-          "s3:PutObject"
-        ],
-        "Effect": "Allow",
-        "Resource": "arn:aws:s3:::xilution-*-data-transfer/*"
-      }
-    ]
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Sid": "VisualEditor0",
+              "Effect": "Allow",
+              "Action": [
+                  "s3:PutObject",
+                  "s3:GetObject",
+                  "s3:ListBucket"
+              ],
+              "Resource": [
+                  "arn:aws:s3:::xilution-*-data-transfer",
+                  "arn:aws:s3:::xilution-*-data-transfer/*"
+              ]
+          }
+      ]
   }
   EOF
 }
