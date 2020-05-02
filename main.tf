@@ -121,10 +121,11 @@ resource "aws_iam_policy" "k8s_s3_access_policy" {
         "Action": [
           "s3:GetObject",
           "s3:ListBucket",
+          "s3:ListObjects",
           "s3:PutObject"
         ],
         "Effect": "Allow",
-        "Resource": "arn:aws:s3:::${local.k8s_data_transfer_bucket_name}/*"
+        "Resource": "arn:aws:s3:::xilution-*-data-transfer/*"
       }
     ]
   }
