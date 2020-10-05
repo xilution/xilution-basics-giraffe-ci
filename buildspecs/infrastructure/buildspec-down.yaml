@@ -29,4 +29,5 @@ phases:
           -var="xilution_aws_account=$XILUTION_AWS_ACCOUNT" \
           -var="xilution_aws_region=$XILUTION_AWS_REGION" \
           -var="xilution_environment=$XILUTION_ENVIRONMENT" \
+          -var="xilution_pipeline_type=$PIPELINE_TYPE" \
           -auto-approve
