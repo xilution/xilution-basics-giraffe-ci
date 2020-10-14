@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 FILE_SYSTEM_ID=$1
 

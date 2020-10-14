@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 # reference: https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html
 

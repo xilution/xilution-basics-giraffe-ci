@@ -3,29 +3,9 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - |
-        aws sts assume-role \
-          --role-arn arn:aws:iam::$CLIENT_AWS_ACCOUNT:role/xilution-developer-role \
-          --role-session-name xilution-client-session > aws-creds.json
-      - export AWS_ACCESS_KEY_ID=`cat aws-creds.json | jq -r '.Credentials.AccessKeyId'`
-      - export AWS_SECRET_ACCESS_KEY=`cat aws-creds.json | jq -r '.Credentials.SecretAccessKey'`
-      - export AWS_SESSION_TOKEN=`cat aws-creds.json | jq -r '.Credentials.SessionToken'`
-      - |
-        terraform init \
-          -backend-config="key=xilution-basics-giraffe/$GIRAFFE_PIPELINE_ID/terraform.tfstate" \
-          -backend-config="bucket=xilution-terraform-backend-state-bucket-$CLIENT_AWS_ACCOUNT" \
-          -backend-config="dynamodb_table=xilution-terraform-backend-lock-table"
+      - . ./scripts/assume-role.sh
+      - ./scripts/terraform-init-trunk.sh
   build:
     commands:
-      - |
-        terraform apply \
-          -var="organization_id=$XILUTION_ORGANIZATION_ID" \
-          -var="gazelle_pipeline_id=$GAZELLE_PIPELINE_ID" \
-          -var="giraffe_pipeline_id=$GIRAFFE_PIPELINE_ID" \
-          -var="client_aws_account=$CLIENT_AWS_ACCOUNT" \
-          -var="client_aws_region=$CLIENT_AWS_REGION" \
-          -var="xilution_aws_account=$XILUTION_AWS_ACCOUNT" \
-          -var="xilution_aws_region=$XILUTION_AWS_REGION" \
-          -var="xilution_environment=$XILUTION_ENVIRONMENT" \
-          -var="xilution_pipeline_type=$PIPELINE_TYPE" \
-          -auto-approve
+      - ./scripts/terraform-plan-trunk.sh
+      - ./scripts/terraform-apply-trunk.sh

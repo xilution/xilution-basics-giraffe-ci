@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 # reference: https://kubernetes.github.io/ingress-nginx/deploy/#aws
 #            https://itnext.io/save-on-your-aws-bill-with-kubernetes-ingress-148214a79dcb

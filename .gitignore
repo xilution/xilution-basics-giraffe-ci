@@ -1,11 +1,1 @@
 .idea
-.terraform
-helm
-.terraform.tfstate.lock.info
-config-map-aws-auth_xilution-k8s.yaml
-kubeconfig_xilution-k8s
-properties.txt
-*.tfstate
-env.sh
-key.pem
-bastion.yaml

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 cat <<EOF >./namespaces.yaml
 ---

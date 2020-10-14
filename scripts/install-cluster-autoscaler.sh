@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 # reference: https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/autoscaling.md
 

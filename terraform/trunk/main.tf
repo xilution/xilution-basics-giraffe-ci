@@ -194,19 +194,19 @@ resource "null_resource" "k8s_configure" {
     command = "aws eks update-kubeconfig --name ${local.k8s_cluster_name}"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-namespaces.sh"
+    command = "/bin/bash ${path.module}/../../scripts/install-namespaces.sh"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-efs-csi-driver.sh"
+    command = "/bin/bash ${path.module}/../../scripts/install-efs-csi-driver.sh"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-efs-persistent-volume.sh ${aws_efs_file_system.nfs.id}"
+    command = "/bin/bash ${path.module}/../../scripts/install-efs-persistent-volume.sh ${aws_efs_file_system.nfs.id}"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-metrics-server.sh"
+    command = "/bin/bash ${path.module}/../../scripts/install-metrics-server.sh"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-kubernetes-dashboard.sh"
+    command = "/bin/bash ${path.module}/../../scripts/install-kubernetes-dashboard.sh"
   }
   provisioner "local-exec" {
     # Allow time for the Kubernetes to warm up before using Helm.
@@ -215,13 +215,13 @@ resource "null_resource" "k8s_configure" {
     command = "sleep 30"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-container-insights.sh ${data.aws_region.current.name} ${local.k8s_cluster_name}"
+    command = "/bin/bash ${path.module}/../../scripts/install-container-insights.sh ${data.aws_region.current.name} ${local.k8s_cluster_name}"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-cluster-autoscaler.sh ${data.aws_region.current.name} ${local.k8s_cluster_name}"
+    command = "/bin/bash ${path.module}/../../scripts/install-cluster-autoscaler.sh ${data.aws_region.current.name} ${local.k8s_cluster_name}"
   }
   provisioner "local-exec" {
-    command = "/bin/bash ${path.module}/scripts/install-nginx-ingress-controller.sh"
+    command = "/bin/bash ${path.module}/../../scripts/install-nginx-ingress-controller.sh"
   }
 }
 
