@@ -51,7 +51,7 @@ verify:
 	terraform validate
 
 pull-docker-image:
-	aws ecr get-login --no-include-email --profile=xilution-prod | /bin/bash
+	aws ecr get-login-password | docker login --username AWS --password-stdin $(AWS_ACCOUNT).dkr.ecr.$(AWS_REGION).amazonaws.com
 	docker pull $(AWS_PROD_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/xilution/codebuild/docker-19:latest
 
 test-pipeline-infrastructure-up:
