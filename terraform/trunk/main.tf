@@ -139,7 +139,7 @@ module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "v7.0.1"
   cluster_name    = local.k8s_cluster_name
-  cluster_version = "1.14"
+  cluster_version = "1.15"
   # See: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
   cluster_enabled_log_types = [
     "api",
