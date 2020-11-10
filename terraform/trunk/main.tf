@@ -137,7 +137,7 @@ resource "aws_iam_policy" "k8s_s3_access_policy" {
 
 module "eks" {
   source                 = "terraform-aws-modules/eks/aws"
-  version                = "v7.0.1"
+  version                = "v13.2.0"
   cluster_name           = local.k8s_cluster_name
   cluster_version        = "1.15"
   cluster_create_timeout = "30m"
