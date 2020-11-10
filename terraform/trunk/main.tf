@@ -135,11 +135,27 @@ resource "aws_iam_policy" "k8s_s3_access_policy" {
   EOF
 }
 
+data "aws_eks_cluster" "cluster" {
+  name = module.eks.cluster_id
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.eks.cluster_id
+}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
+  load_config_file       = false
+  version                = "1.13.3"
+}
+
 module "eks" {
   source                 = "terraform-aws-modules/eks/aws"
   version                = "v13.2.0"
   cluster_name           = local.k8s_cluster_name
-  cluster_version        = "1.15"
+  cluster_version        = "1.17"
   cluster_create_timeout = "30m"
   # See: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
   cluster_enabled_log_types = [
