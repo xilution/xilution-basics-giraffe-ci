@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 awsAccountId=${CLIENT_AWS_ACCOUNT}
 pipelineId=${GIRAFFE_PIPELINE_ID}

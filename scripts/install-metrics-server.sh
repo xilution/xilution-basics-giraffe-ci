@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 # reference: https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html
 

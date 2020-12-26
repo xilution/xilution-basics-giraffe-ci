@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 terraform apply \
   -var="organization_id=$XILUTION_ORGANIZATION_ID" \

@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 # reference: https://github.com/kubernetes-sigs/aws-efs-csi-driver
 
