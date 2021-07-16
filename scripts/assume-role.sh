@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 awsAccountId=${CLIENT_AWS_ACCOUNT}
-awsRole=xilution-developer-role
+awsRole=xilution-agent-role
 
 echo "awsAccountId = ${awsAccountId}"
 echo "awsRole = ${awsRole}"

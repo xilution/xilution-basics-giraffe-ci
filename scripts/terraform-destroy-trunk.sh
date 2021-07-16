@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-terraform destroy \
+terraform destroy -no-color \
   -var="organization_id=$XILUTION_ORGANIZATION_ID" \
   -var="gazelle_pipeline_id=$GAZELLE_PIPELINE_ID" \
   -var="giraffe_pipeline_id=$GIRAFFE_PIPELINE_ID" \
