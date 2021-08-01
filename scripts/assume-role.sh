@@ -22,3 +22,5 @@ export AWS_SECRET_ACCESS_KEY=${awsSecretAccessKey}
 
 awsSessionToken=$(cat <./aws-creds.json | jq -r ".Credentials.SessionToken")
 export AWS_SESSION_TOKEN=${awsSessionToken}
+
+echo "All Done!"
